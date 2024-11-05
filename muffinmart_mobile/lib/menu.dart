@@ -135,7 +135,6 @@ class ItemHomepage {
      ItemHomepage(this.name, this.icon);
  }
 
-
 class ItemCard extends StatelessWidget {
   // Menampilkan kartu dengan ikon dan nama.
 
