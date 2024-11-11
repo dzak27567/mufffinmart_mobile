@@ -118,7 +118,7 @@
 
 5. Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
 
-    Saya menggunakan Navigator dan MaterialPageRoute untuk menangani navigasi antar halaman. Dengan Navigator, saya dapat menambahkan atau menghapus halaman dari stack, yang memudahkan untuk berpindah antar halaman. Untuk menavigasi ke halaman baru, saya menggunakan Navigator.push bersama MaterialPageRoute, yang memungkinkan saya memanggil halaman tujuan dengan animasi standar. Jika saya perlu kembali ke halaman sebelumnya, saya menggunakan Navigator.pop. Selain itu, saya juga menggunakan Navigator.pushReplacement untuk menggantikan halaman saat ini dengan halaman baru, seperti pada navigasi menu utama dan tambah product di drawer.
+    Saya menggunakan Navigator dan MaterialPageRoute untuk menangani navigasi antar halaman. Dengan Navigator, saya dapat menambahkan atau menghapus halaman dari stack, yang memudahkan untuk berpindah antar halaman. Untuk menavigasi ke halaman baru, saya menggunakan Navigator.push bersama MaterialPageRoute, yang memungkinkan saya memanggil halaman tujuan dengan animasi standar. Jika saya perlu kembali ke halaman sebelumnya, saya menggunakan Navigator.pop. Selain itu, saya juga menggunakan Navigator.pushReplacement untuk menggantikan halaman saat ini dengan halaman baru, seperti pada navigasi halaman utama dan tambah product di drawer.
 
 </details>
 
