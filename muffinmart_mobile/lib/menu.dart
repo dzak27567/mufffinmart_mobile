@@ -1,98 +1,104 @@
 import 'package:flutter/material.dart';
+// Impor drawer widget
+import 'package:muffinmart_mobile/widgets/left_drawer.dart';
+import 'package:muffinmart_mobile/productentry_form.dart';
 
 class MyHomePage extends StatelessWidget {
+    
     MyHomePage({super.key});
-
     final String npm = '2306202132'; // NPM
     final String name = 'Fadhlurohman Dzaki'; // Nama
     final String className = 'PBP C'; // Kelas
 
     final List<ItemHomepage> items = [
-         ItemHomepage("Lihat Daftar Produk", Icons.list),
-         ItemHomepage("Tambah Produk", Icons.add),
+         ItemHomepage("Lihat Product", Icons.shopping_cart),
+         ItemHomepage("Tambah Product", Icons.add),
          ItemHomepage("Logout", Icons.logout),
-     ];
+    ];
 
     @override
-  Widget build(BuildContext context) {
-    // Scaffold menyediakan struktur dasar halaman dengan AppBar dan body.
-    return Scaffold(
-      // AppBar adalah bagian atas halaman yang menampilkan judul.
-      appBar: AppBar(
-        // Judul aplikasi " muffinmart Tracker" dengan teks putih dan tebal.
-        title: const Text(
-          'MuffinMart',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        // Warna latar belakang AppBar diambil dari skema warna tema aplikasi.
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
-      // Body halaman dengan padding di sekelilingnya.
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        // Menyusun widget secara vertikal dalam sebuah kolom.
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Row untuk menampilkan 3 InfoCard secara horizontal.
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InfoCard(title: 'NPM', content: npm),
-                InfoCard(title: 'Name', content: name),
-                InfoCard(title: 'Class', content: className),
-              ],
+    Widget build(BuildContext context) {
+      // Scaffold menyediakan struktur dasar halaman dengan AppBar dan body.
+      return Scaffold(
+        // AppBar adalah bagian atas halaman yang menampilkan judul.
+        appBar: AppBar(
+          // Mengganti warna icon drawer menjadi putih
+          iconTheme: const IconThemeData(color: Colors.white),
+          // Judul aplikasi "MuffinMart" dengan teks putih dan tebal.
+          title: const Text(
+            'MuffinMart',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
-
-            // Memberikan jarak vertikal 16 unit.
-            const SizedBox(height: 16.0),
-
-            // Menempatkan widget berikutnya di tengah halaman.
-            Center(
-              child: Column(
-                // Menyusun teks dan grid item secara vertikal.
-
+          ),
+          // Warna latar belakang AppBar diambil dari skema warna tema aplikasi.
+          backgroundColor: Theme.of(context).colorScheme.primary,
+        ),
+        // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
+        drawer: const LeftDrawer(),
+        // Body halaman dengan padding di sekelilingnya.
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          // Menyusun widget secara vertikal dalam sebuah kolom.
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Row untuk menampilkan 3 InfoCard secara horizontal.
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // Menampilkan teks sambutan dengan gaya tebal dan ukuran 18.
-                  const Padding(
-                    padding: EdgeInsets.only(top: 16.0),
-                    child: Text(
-                      'Welcome to MuffinMart',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-
-                  // Grid untuk menampilkan ItemCard dalam bentuk grid 3 kolom.
-                  GridView.count(
-                    primary: true,
-                    padding: const EdgeInsets.all(20),
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 3,
-                    // Agar grid menyesuaikan tinggi kontennya.
-                    shrinkWrap: true,
-
-                    // Menampilkan ItemCard untuk setiap item dalam list items.
-                    children: items.map((ItemHomepage item) {
-                      return ItemCard(item);
-                    }).toList(),
-                  ),
+                  InfoCard(title: 'NPM', content: npm),
+                  InfoCard(title: 'Name', content: name),
+                  InfoCard(title: 'Class', content: className),
                 ],
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
+              // Memberikan jarak vertikal 16 unit.
+              const SizedBox(height: 16.0),
+
+              // Menempatkan widget berikutnya di tengah halaman.
+              Center(
+                child: Column(
+                  // Menyusun teks dan grid item secara vertikal.
+
+                  children: [
+                    // Menampilkan teks sambutan dengan gaya tebal dan ukuran 18.
+                    const Padding(
+                      padding: EdgeInsets.only(top: 16.0),
+                      child: Text(
+                        'Welcome to Muffin Mart',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    ),
+
+                    // Grid untuk menampilkan ItemCard dalam bentuk grid 3 kolom.
+                    GridView.count(
+                      primary: true,
+                      padding: const EdgeInsets.all(20),
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      crossAxisCount: 3,
+                      // Agar grid menyesuaikan tinggi kontennya.
+                      shrinkWrap: true,
+
+                      // Menampilkan ItemCard untuk setiap item dalam list items.
+                      children: items.map((ItemHomepage item) {
+                        return ItemCard(item);
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+}
 
 
 class InfoCard extends StatelessWidget {
@@ -135,6 +141,7 @@ class ItemHomepage {
      ItemHomepage(this.name, this.icon);
  }
 
+ 
 class ItemCard extends StatelessWidget {
   // Menampilkan kartu dengan ikon dan nama.
 
@@ -159,6 +166,16 @@ class ItemCard extends StatelessWidget {
             ..showSnackBar(
               SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
             );
+          // Navigate ke route yang sesuai (tergantung jenis tombol)
+          if (item.name == "Tambah Product") {
+            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ProductEntryFormPage.
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProductEntryFormPage(),
+              ),
+            );
+          }
         },
         // Container untuk menyimpan Icon dan Text
         child: Container(
