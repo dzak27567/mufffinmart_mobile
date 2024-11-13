@@ -114,7 +114,7 @@
    
 4. Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
 
-    Saya mengatur tema (theme) dalam aplikasi Flutter saya dengan menggunakan ThemeData di kelas utama MaterialApp. Tema ini memungkinkan saya untuk mengonfigurasi skema warna, gaya teks, dan elemen visual lainnya di seluruh aplikasi. Pada aplikasi MuffinMart, saya telah mengimplementasikan colorScheme yang mendefinisikan primarySwatch dengan warna utama, seperti Colors.brown, serta warna sekunder untuk konsistensi tampilan. Dengan cara ini, elemen seperti AppBar, Drawer, dan Card di berbagai halaman tetap konsisten, karena mengambil warna dari skema tema yang sama.
+    Saya menerapkan tema (theme) dalam aplikasi Flutter saya melalui `ThemeData` di kelas utama `MaterialApp`. Tema ini memungkinkan saya untuk mengonfigurasi skema warna, gaya teks, dan berbagai elemen visual lainnya secara menyeluruh di aplikasi. Pada aplikasi MuffinMart, saya telah menggunakan `colorScheme` yang menetapkan `primarySwatch` dengan warna utama, seperti `Colors.brown`, serta warna sekunder untuk menjaga tampilan yang konsisten. Dengan pengaturan ini, elemen-elemen seperti `AppBar`, `Drawer`, dan `Card` di berbagai halaman menggunakan warna yang sama dari skema tema, menciptakan konsistensi tampilan di seluruh aplikasi.
 
 5. Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
 
