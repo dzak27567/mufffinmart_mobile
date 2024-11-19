@@ -2,6 +2,96 @@
 ## Nama : Fadhlurohman Dzaki
 ## Npm : 2306202132
 
+
+# Tugas 9  Integrasi Layanan Web Django dengan Aplikasi Flutter
+
+<details>
+<summary>Click for more detail</summary>
+<br>
+
+# Jawaban Pertanyaan
+
+### 1.Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
+Membuat model untuk pengambilan atau pengiriman data JSON sangat diperlukan untuk memastikan proses yang konsisten dan aman dalam pertukaran data. Berikut adalah alasan dan risikonya:
+
+- **Struktur yang Konsisten**  
+  Model membantu memastikan struktur data yang diterima atau dikirim selalu sesuai, sehingga meminimalkan kesalahan.
+  
+- **Validasi Data**  
+  Model memverifikasi bahwa data yang diterima sesuai dengan tipe atau aturan yang ditentukan, seperti format tanggal atau tipe integer.
+
+- **Pengelolaan Lebih Mudah**  
+  Dengan model, manipulasi data seperti serialisasi atau deserialisasi menjadi lebih sistematis.
+
+- **Error Jika Tidak Membuat Model**  
+  Jika tidak membuat model, beberapa error mungkin terjadi, seperti:
+  1. Struktur JSON tidak sesuai dengan yang diharapkan.
+  2. Data tidak tervalidasi dengan benar.
+  3. Aplikasi client atau server mengalami kesulitan memahami data.
+
+
+
+### 2. Jelaskan fungsi dari library http yang sudah kamu implementasikan pada tugas ini
+Saya menggunakan library `pbp_django_auth`. Library `pbp_django_auth` di Flutter mempermudah implementasi otentikasi antara aplikasi Flutter dan Django. Berikut adalah fungsi utamanya:
+
+- **Otomatisasi Proses Otentikasi**  
+  Library ini menyediakan cara mudah untuk login dan logout pengguna dengan metode seperti `request.login()` dan `request.logout()`. Setelah login, cookie sesi disimpan dan digunakan untuk autentikasi pada permintaan selanjutnya.
+
+- **Manajemen Cookie**  
+  Secara otomatis menangani pengambilan dan pengiriman cookie CSRF dan sesi antara Flutter dan Django. Ini memungkinkan pengiriman permintaan yang memerlukan otentikasi (seperti endpoint dengan decorator `@login_required`) tanpa konfigurasi tambahan.
+
+- **Integrasi Mudah dengan Provider**  
+  Dengan memanfaatkan `Provider`, library ini memungkinkan instance `CookieRequest` dibagikan ke seluruh komponen aplikasi, sehingga setiap bagian aplikasi dapat mengakses status otentikasi dan melakukan permintaan API yang aman.
+
+- **Mendukung Operasi HTTP**  
+  Menyediakan metode seperti `request.get()`, `request.post()`, dan `request.postJson()` untuk melakukan operasi pengambilan atau pengiriman data ke server Django. Data dikirim dalam format yang kompatibel dengan Django, termasuk JSON dan data form.
+
+- **Pengelolaan Status Login**  
+  Library ini memiliki properti seperti `request.loggedIn` untuk memeriksa status login pengguna secara real-time, membantu dalam menampilkan UI yang berbeda untuk pengguna yang sudah login dan belum login.
+
+- **Keamanan Tambahan**  
+  Dengan konfigurasi CORS dan pengaturan cookie di Django (seperti `CSRF_COOKIE_SECURE` dan `SESSION_COOKIE_SAMESITE`), library ini menjaga keamanan komunikasi antara Flutter dan Django.
+
+
+
+### 3. Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+Fungsi dari `CookieRequest` dalam aplikasi adalah untuk menyimpan informasi otentikasi, seperti cookie atau token, sehingga mempermudah pengelolaan sesi pengguna. Dengan membagikan instance `CookieRequest` ke seluruh komponen aplikasi melalui `Provider`, setiap bagian aplikasi dapat memanfaatkan status otentikasi tanpa perlu login ulang. Hal ini memastikan data pengguna tetap konsisten di seluruh aplikasi, menghemat waktu, dan mencegah duplikasi proses autentikasi.
+
+
+
+### 4. Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+Mekanisme pengiriman data dari input hingga ditampilkan di Flutter melibatkan langkah-langkah berikut:
+
+1. Pengguna mengisi data di form aplikasi Flutter.
+2. Flutter mengirim data ke server Django menggunakan permintaan HTTP, misalnya melalui library `pbp_django_auth`.
+3. Django menerima data, memprosesnya (seperti menyimpan ke database atau melakukan validasi), dan menghasilkan respons dalam format JSON.
+4. Respons dari server diterima oleh Flutter, didekode, dan ditampilkan di UI menggunakan widget seperti `ListView` atau `Text`.
+
+
+
+### 5.  Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+Proses autentikasi melibatkan interaksi antara Flutter dan Django sebagai berikut:
+
+1. **Registrasi**  
+   Flutter mengirim data akun seperti username, email, dan password ke endpoint Django untuk diverifikasi dan disimpan di database.
+
+2. **Login**  
+   Flutter mengirim data username dan password ke server Django untuk divalidasi. Jika valid, Django mengatur cookie sesi dan mengirimkannya kembali ke Flutter. Cookie ini digunakan untuk permintaan berikutnya yang membutuhkan autentikasi.
+
+3. **Logout**  
+   Saat logout, Django menghapus sesi atau token, memberitahu Flutter untuk mengarahkan pengguna kembali ke halaman login.
+
+Proses ini memastikan otentikasi yang aman dan memungkinkan integrasi yang mulus antara server dan aplikasi Flutter.
+
+
+
+### 6.  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
+
+
+
+</details>
+
+
 # Tugas 8 Flutter Navigation, Layouts, Forms, and Input Elements
 <details>
 <summary>Click for more detail</summary>
