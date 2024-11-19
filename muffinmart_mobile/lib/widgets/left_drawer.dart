@@ -1,9 +1,10 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:muffinmart_mobile/menu.dart';
+import 'package:muffinmart_mobile/screens/list_productentry.dart';
+import 'package:muffinmart_mobile/screens/menu.dart';
 // TODO: Impor halaman ProductEntryFormPage yang sudah dibuat
-import 'package:muffinmart_mobile/productentry_form.dart';
+import 'package:muffinmart_mobile/screens/productentry_form.dart';
 
 
 
@@ -69,6 +70,17 @@ class LeftDrawer extends StatelessWidget {
                   ),
                 );  
               
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_reaction_rounded),
+            title: const Text('Daftar produk'),
+            onTap: () {
+                // Route menu ke halaman mood
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+                );
             },
           ),
 
