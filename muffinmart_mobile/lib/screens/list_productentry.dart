@@ -20,14 +20,14 @@ class _ProductEntryPageState extends State<ProductEntryPage> {
     // Melakukan decode response menjadi bentuk json
     var data = response;
     
-    // Melakukan konversi data json menjadi object MoodEntry
-    List<Product> listMood = [];
+
+    List<Product> listProduct = [];
     for (var d in data) {
       if (d != null) {
-        listMood.add(Product.fromJson(d));
+        listProduct.add(Product.fromJson(d));
       }
     }
-    return listMood;
+    return listProduct;
   }
 
   @override

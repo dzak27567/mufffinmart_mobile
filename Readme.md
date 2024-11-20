@@ -11,7 +11,7 @@
 
 # Jawaban Pertanyaan
 
-### 1.Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
+### 1. Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
 Membuat model untuk pengambilan atau pengiriman data JSON sangat diperlukan untuk memastikan proses yang konsisten dan aman dalam pertukaran data. Berikut adalah alasan dan risikonya:
 
 - **Struktur yang Konsisten**  
@@ -87,8 +87,193 @@ Proses ini memastikan otentikasi yang aman dan memungkinkan integrasi yang mulus
 
 ### 6.  Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
 
+1. Membuat register.dart dan login.dart sebagai halaman untuk register dan login bagi user.
+2. Mengintegrasikan sistem autentikasi django dengan proyek fultter dengan menginstall django-cors-headers pada proyek django dan menginstall package pbp_django_auth
+pada proyek flutter kemudian menerapkannya pada bagian yang diperlukan.
+3. Membuat model kustom sesuai dengan proyek django
+    ```dart
+    
+
+    import 'dart:convert';
+
+    List<Product> productEntryFromJson(String str) => List<Product>.from(json.decode(str).map((x) => Product.fromJson(x)));
+
+    String productEntryFromJSon(List<Product> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+    class Product {
+        String model;
+        String pk;
+        Fields fields;
+
+        Product({
+            required this.model,
+            required this.pk,
+            required this.fields,
+        });
+
+        factory Product.fromJson(Map<String, dynamic> json) => Product(
+            model: json["model"],
+            pk: json["pk"],
+            fields: Fields.fromJson(json["fields"]),
+        );
+
+        Map<String, dynamic> toJson() => {
+            "model": model,
+            "pk": pk,
+            "fields": fields.toJson(),
+        };
+    }
+
+    class Fields {
+        int user;
+        String name;
+        int price;
+        String description;
+        int quantity;
+
+        Fields({
+            required this.user,
+            required this.name,
+            required this.price,
+            required this.description,
+            required this.quantity,
+        });
+
+        factory Fields.fromJson(Map<String, dynamic> json) => Fields(
+            user: json["user"],
+            name: json["name"],
+            price: json["price"],
+            description: json["description"],
+            quantity: json["quantity"],
+        );
+
+        Map<String, dynamic> toJson() => {
+            "user": user,
+            "name": name,
+            "price": price,
+            "description": description,
+            "quantity": quantity,
+        };
+    }
 
 
+    ```
+4. Membuat halaman untuk menampilkan semua item yang terdapat pada endpoint JSON di Django
+
+    ```dart
+    import 'package:flutter/material.dart';
+    import 'package:muffinmart_mobile/models/product_entry.dart';
+    import 'package:pbp_django_auth/pbp_django_auth.dart';
+    import 'package:provider/provider.dart';
+
+    import 'package:muffinmart_mobile/widgets/left_drawer.dart';
+
+    class ProductEntryPage extends StatefulWidget {
+    const ProductEntryPage({super.key});
+
+    @override
+    State<ProductEntryPage> createState() => _ProductEntryPageState();
+    }
+
+    class _ProductEntryPageState extends State<ProductEntryPage> {
+    Future<List<Product>> fetchProduct(CookieRequest request) async {
+        // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+        final response = await request.get('http://127.0.0.1:8000/json/');
+        
+        // Melakukan decode response menjadi bentuk json
+        var data = response;
+        
+
+        List<Product> listProduct = [];
+        for (var d in data) {
+        if (d != null) {
+            listProduct.add(Product.fromJson(d));
+        }
+        }
+        return listProduct;
+    }
+
+    @override
+    Widget build(BuildContext context) {
+        final request = context.watch<CookieRequest>();
+        return Scaffold(
+        appBar: AppBar(
+            title: const Text('produk List'),
+        ),
+        drawer: const LeftDrawer(),
+        body: FutureBuilder(
+            future: fetchProduct(request),
+            builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+                return const Center(child: CircularProgressIndicator());
+            } else {
+                if (!snapshot.hasData) {
+                return const Column(
+                    children: [
+                    Text(
+                        'Belum ada data produk di muffinmart.',
+                        style: TextStyle(fontSize: 20, color: Color(0xff59A5D8)),
+                    ),
+                    SizedBox(height: 8),
+                    ],
+                );
+                } else {
+                return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (_, index) => Container(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                        Text(
+                            "${snapshot.data![index].fields.name}",
+                            style: const TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text("${snapshot.data![index].fields.name}"),
+                        const SizedBox(height: 10),
+                        Text("${snapshot.data![index].fields.price}"),
+                        const SizedBox(height: 10),
+                        Text("${snapshot.data![index].fields.description}"),
+                        const SizedBox(height: 10),
+                        Text("${snapshot.data![index].fields.quantity}")
+                        ],
+                    ),
+                    ),
+                );
+                }
+            }
+            },
+        ),
+        );
+    }
+    }
+    ```
+5. Melakukan filter pada halaman daftar item dengan hanya menampilkan item yang terasosiasi dengan pengguna yang login dengan method fetchProduct dengan paramater CookieRequest pada bagian ini di list_productentry.dart
+    ```dart
+    Future<List<Product>> fetchProduct(CookieRequest request) async {
+    // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+    final response = await request.get('http://127.0.0.1:8000/json/');
+    
+    // Melakukan decode response menjadi bentuk json
+    var data = response;
+    
+
+    List<Product> listProduct = [];
+    for (var d in data) {
+      if (d != null) {
+        listProduct.add(Product.fromJson(d));
+      }
+    }
+    return listProduct;
+  }
+    ```
 </details>
 
 
